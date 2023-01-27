@@ -19,6 +19,7 @@ export default class Character {
     this.defence = 0;
     this.health = 50;
     this.type = type;
+    if (new.target.name === 'Character') throw new Error('it is forbidden to use new Character');
     // TODO: выбросите исключение, если кто-то использует "new Character()"
   }
 }

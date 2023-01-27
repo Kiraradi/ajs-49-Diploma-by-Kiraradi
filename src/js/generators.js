@@ -8,7 +8,31 @@
  * возвращает новый экземпляр класса персонажа
  *
  */
+import Bowman from "./characters/Bowman";
+import Magician from "./characters/Magician";
+import Daemon from "./characters/Daemon";
+import Swordsman from "./characters/Swordsman";
+import Vampire from "./characters/Vampire";
+import Undead from "./characters/Undead";
+
 export function* characterGenerator(allowedTypes, maxLevel) {
+  while (true) {
+    const randomType = allowedTypes[Math.floor(Math.random() * ((allowedTypes.length -1) - 0 + 1) + 0)];
+    const randomLevel = Math.floor(Math.random() * (maxLevel - 1 + 1) + 1)
+    if (randomType === 'Bowman') {
+      yield new Bowman(randomLevel);
+    } else if (randomType === 'Magician') {
+      yield new Magician(randomLevel);
+    } else if (randomType === 'Swordsman') {
+      yield new Swordsman(randomLevel);
+    } else if (randomType === 'Daemon') {
+      yield new Daemon(randomType);
+    } else if (randomType === 'Vampire') {
+      yield new Vampire(randomLevel);
+    } else if (randomType === 'Undead') {
+      yield new Undead(randomLevel);
+    }
+  }
   // TODO: write logic here
 }
 
