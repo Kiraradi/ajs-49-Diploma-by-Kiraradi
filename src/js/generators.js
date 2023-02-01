@@ -8,17 +8,18 @@
  * возвращает новый экземпляр класса персонажа
  *
  */
-import Bowman from "./characters/Bowman";
-import Magician from "./characters/Magician";
-import Daemon from "./characters/Daemon";
-import Swordsman from "./characters/Swordsman";
-import Vampire from "./characters/Vampire";
-import Undead from "./characters/Undead";
+import Bowman from './characters/Bowman';
+import Magician from './characters/Magician';
+import Daemon from './characters/Daemon';
+import Swordsman from './characters/Swordsman';
+import Vampire from './characters/Vampire';
+import Undead from './characters/Undead';
 
 export function* characterGenerator(allowedTypes, maxLevel) {
   while (true) {
-    const randomType = allowedTypes[Math.floor(Math.random() * ((allowedTypes.length -1) - 0 + 1) + 0)];
-    const randomLevel = Math.floor(Math.random() * (maxLevel - 1 + 1) + 1)
+    const randomType = allowedTypes[Math.floor(Math.random()
+      * ((allowedTypes.length - 1) - 0 + 1) + 0)];
+    const randomLevel = Math.floor(Math.random() * (maxLevel - 1 + 1) + 1);
     if (randomType === 'Bowman') {
       yield new Bowman(randomLevel);
     } else if (randomType === 'Magician') {
@@ -41,8 +42,15 @@ export function* characterGenerator(allowedTypes, maxLevel) {
  * @param allowedTypes массив классов
  * @param maxLevel максимальный возможный уровень персонажа
  * @param characterCount количество персонажей, которое нужно сформировать
- * @returns экземпляр Team, хранящий экземпляры персонажей. Количество персонажей в команде - characterCount
+ * @returns экземпляр Team, хранящий экземпляры персонажей. Количество персонажей
+ * в команде - characterCount
  * */
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
+  const characters = [];
+
+  for (let i = 0; i < characterCount; i += 1) {
+    characters.push(characterGenerator(allowedTypes, maxLevel).next().value);
+  }
+  return characters;
   // TODO: write logic here
 }
