@@ -17,9 +17,8 @@ import Undead from './characters/Undead';
 
 export function* characterGenerator(allowedTypes, maxLevel) {
   while (true) {
-    const randomType = allowedTypes[Math.floor(Math.random()
-      * ((allowedTypes.length - 1) - 0 + 1) + 0)];
-    const randomLevel = Math.floor(Math.random() * (maxLevel - 1 + 1) + 1);
+    const randomType = allowedTypes[Math.floor(Math.random() * allowedTypes.length)];
+    const randomLevel = Math.floor(Math.random() * maxLevel + 1);
     if (randomType === 'Bowman') {
       yield new Bowman(randomLevel);
     } else if (randomType === 'Magician') {
@@ -27,7 +26,7 @@ export function* characterGenerator(allowedTypes, maxLevel) {
     } else if (randomType === 'Swordsman') {
       yield new Swordsman(randomLevel);
     } else if (randomType === 'Daemon') {
-      yield new Daemon(randomType);
+      yield new Daemon(randomLevel);
     } else if (randomType === 'Vampire') {
       yield new Vampire(randomLevel);
     } else if (randomType === 'Undead') {
