@@ -15,6 +15,8 @@ test('test ad new class Bowman', () => {
     defence: 25,
     health: 50,
     type: 'bowman',
+    rangeTravel: 2,
+    rangeAttacks: 2,
   };
   expect(persomBowman).toEqual(reghtPersonBowman);
 });
@@ -28,6 +30,8 @@ test('test ad new class Daemon', () => {
     defence: 10,
     health: 50,
     type: 'daemon',
+    rangeTravel: 1,
+    rangeAttacks: 4,
   };
   expect(persomDaemon).toEqual(reghtPersonDaemon);
 });
@@ -41,6 +45,8 @@ test('test ad new class Magician', () => {
     defence: 40,
     health: 50,
     type: 'magician',
+    rangeTravel: 1,
+    rangeAttacks: 4,
   };
   expect(persomMagician).toEqual(reghtPersonMagician);
 });
@@ -54,6 +60,8 @@ test('test ad new class Swordsman', () => {
     defence: 10,
     health: 50,
     type: 'swordsman',
+    rangeTravel: 4,
+    rangeAttacks: 1,
   };
   expect(persomSwordsman).toEqual(reghtPersonSwordsman);
 });
@@ -67,6 +75,8 @@ test('test ad new class Undead', () => {
     defence: 10,
     health: 50,
     type: 'undead',
+    rangeTravel: 4,
+    rangeAttacks: 1,
   };
   expect(persomUndead).toEqual(reghtPersonUndead);
 });
@@ -80,6 +90,8 @@ test('test ad new class Vampire', () => {
     defence: 25,
     health: 50,
     type: 'vampire',
+    rangeTravel: 2,
+    rangeAttacks: 2,
   };
   expect(persomVampire).toEqual(reghtPersonVampire);
 });
