@@ -69,6 +69,7 @@ export default class GameController {
     /* eslint-disable-next-line no-restricted-globals */
     const player = event.currentTarget.firstElementChild;
     if (player !== null) {
+      this.splitByTeams();
       if (this.selectedCharacter !== -1) {
         this.gamePlay.deselectCell(this.selectedCharacter);
       }
@@ -85,14 +86,33 @@ export default class GameController {
             this.gamePlay.boardSize,
           );          
         }
-      }
-       else {
+      } else if(/vampire|undead|daemon/.test(player.className) && this.selectedCharacter > 0) {
+        if (this.arrayAvailableCellsAttack.includes(index)) {
+
+          const attackerIndex = this.arrAllTeams.findIndex((ind) => ind.position === this.selectedCharacter);
+          const targetIndex = this.arrAllTeams.findIndex((ind) => ind.position === index);
+
+          if (attackerIndex >=0 && targetIndex >= 0) {
+            const attacker = this.arrAllTeams[attackerIndex].character;
+            const target = this.arrAllTeams[targetIndex].character;
+            const damage = Math.max(attacker.attack - target.defence, attacker.attack * 0.1);
+            target.health -= damage;
+
+            this.gamePlay.showDamage(index,damage).then(()=>{
+              this.gamePlay.redrawPositions(this.arrAllTeams); 
+              this.checkingTheVictoryConditions();            
+              this.feindlicheAktion();
+              console.log('person');
+            });
+          };
+          this.gamePlay.selectCell(this.selectedCharacter);
+        } else {
         GamePlay.showError('enemy');
       }
-      
+      }
     }
 
-    if(this.arrayAvailableCells.includes(index) && player === null ) {
+    if(this.selectedCharacter >= 0 && this.arrayAvailableCells.includes(index) && player === null) {
       const movingCharacter = this.arrAllTeams.findIndex((ind) => ind.position === this.selectedCharacter);
       if (movingCharacter >= 0) {
         this.arrAllTeams[movingCharacter].position = index;
@@ -100,8 +120,11 @@ export default class GameController {
         this.selectedCharacter = index;
         this.gamePlay.redrawPositions(this.arrAllTeams);
         this.onCellClick(index);
+        this.checkingTheVictoryConditions();
+        this.feindlicheAktion();
       }
     }
+    
   }
 
   onCellEnter(index) {
@@ -129,9 +152,10 @@ export default class GameController {
           /* eslint-disable-next-line no-restricted-globals */
           event.currentTarget.style.cursor = cursors.pointer;
         } else if (/vampire|undead|daemon/.test(character.type)) {
-          if (this.arrayAvailableCellsAttack && this.arrayAvailableCellsAttack.includes(index)) {
+          if (this.arrayAvailableCellsAttack && this.arrayAvailableCellsAttack.includes(index) && this.selectedCharacter > 0) {
             /* eslint-disable-next-line no-restricted-globals */
             event.currentTarget.style.cursor = cursors.crosshair;
+            this.gamePlay.selectCell(index, 'red');
           }
         }
       }
@@ -147,5 +171,104 @@ export default class GameController {
     if (index !== this.selectedCharacter) {
       this.gamePlay.deselectCell(index);
     }
+  }
+  //Computerlogik
+  feindlicheAktion() {
+
+    if (this.darkTeam.length > 0 && this.lightTeam.length > 0) {
+      const darkCharacterIndex = this.darkTeam[Math.floor(Math.random() * this.darkTeam.length)];
+    const darkCharacter = this.arrAllTeams.findIndex((ind) => ind.position === darkCharacterIndex);
+
+    const [arrayAvailableCellsDC, arrayAvailableCellsAttackDC] = availableMoves(
+      this.arrAllTeams[darkCharacter].character.rangeTravel,
+      this.arrAllTeams[darkCharacter].character.rangeAttacks,
+      darkCharacterIndex,
+      this.gamePlay.boardSize,
+    ); 
+    const characterToAttackInd = this.lightTeam.find((element) => {
+      return arrayAvailableCellsAttackDC.includes(element);
+    })|| null;
+
+    if(characterToAttackInd) {
+      const attacker =  this.arrAllTeams[darkCharacter].character
+      const target = this.arrAllTeams[this.arrAllTeams.findIndex(
+        (ind) => ind.position === characterToAttackInd
+        )].character;
+      const damage = Math.max(attacker.attack - target.defence, attacker.attack * 0.1);
+      target.health -= damage;
+      this.gamePlay.showDamage(characterToAttackInd,damage).then(()=>{
+        this.gamePlay.redrawPositions(this.arrAllTeams);
+        
+      });
+    } else {
+      const nextCell = calculationNextCell(this.arrAllTeams);
+      function calculationNextCell(arrAllTeams) {
+        let randomCell = arrayAvailableCellsDC[Math.floor(Math.random() * arrayAvailableCellsDC.length)]
+        if (arrAllTeams.some(elem => elem.position === randomCell)) {
+          randomCell = calculationNextCell(arrAllTeams);
+        }
+        return randomCell
+      }
+      this.arrAllTeams[darkCharacter].position = nextCell;
+      this.gamePlay.redrawPositions(this.arrAllTeams);
+    }
+    this.splitByTeams();
+  } 
+
+  this.checkingTheVictoryConditions();
+    }
+
+  checkingTheVictoryConditions() {
+    const deadCharacter =  this.arrAllTeams.findIndex(element => element.character.health <= 0)
+    if (deadCharacter >= 0) {
+      if (this.arrAllTeams[deadCharacter].position === this.selectedCharacter) {
+        this.gamePlay.deselectCell(this.arrAllTeams[deadCharacter].position);
+        this.selectedCharacter = -1;
+      }
+      
+      this.gamePlay.hideCellTooltip(this.arrAllTeams[deadCharacter].position);
+      this.arrAllTeams.splice(deadCharacter,1);
+      this.gamePlay.redrawPositions(this.arrAllTeams);
+    }
+    this.splitByTeams();
+    if (this.lightTeam.length <= 0) {
+      console.log('you dead');
+      this.gameOver();
+    }
+    if(this.darkTeam <= 0) {
+      console.log('you win');
+      this.arrAllTeams.forEach(element => {
+        element.character.levelUp();
+      })
+      
+    }
+    //console.log(this.darkTeam, this.lightTeam, this.arrAllTeams)
+  }
+
+ 
+
+  splitByTeams () {
+    this.darkTeam = [];
+    this.lightTeam = [];
+    this.arrAllTeams.forEach((element)=> {
+      if(/vampire|undead|daemon/.test(element.character.type)) {
+        this.darkTeam.push(element.position)
+      } else {
+        this.lightTeam.push(element.position)
+      }
+    });
+  }
+
+  newGame() {
+
+  }
+
+  gameOver() {   
+    /*Array.from(this.gamePlay.boardEl.children).forEach(element => {
+      element.removeEventListener('click',this.gamePlay.onCellClick);
+      element.removeEventListener('mouseleave',this.gamePlay.onCellLeave);
+      element.removeEventListener('mouseenter',this.gamePlay.onCellEnter);
+    })*/
+    console.log(this.gamePlay.boardEl.children)
   }
 }
