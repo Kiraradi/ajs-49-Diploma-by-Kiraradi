@@ -1,11 +1,8 @@
 export default class GameState {
   static from(object) {
-    if (object.moveStatus === 'player') {
-      object.moveStatus = 'enemy';
-    } else if (object.moveStatus === 'enemy') {
-      object.moveStatus = 'player';
+    if (object.gameLevel > 4) {
+      object.state = 'gameOver';
     }
-    // TODO: create object
     return object;
   }
 }

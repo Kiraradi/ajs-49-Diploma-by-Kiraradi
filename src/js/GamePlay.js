@@ -49,14 +49,14 @@ export default class GamePlay {
     this.loadGameEl.addEventListener('click', (event) => this.onLoadGameClick(event));
 
     this.boardEl = this.container.querySelector('[data-id=board]');
-
     this.boardEl.classList.add(theme);
+
     for (let i = 0; i < this.boardSize ** 2; i += 1) {
       const cellEl = document.createElement('div');
       cellEl.classList.add('cell', 'map-tile', `map-tile-${calcTileType(i, this.boardSize)}`);
-      cellEl.addEventListener('mouseenter', (event) => this.onCellEnter(event));
-      cellEl.addEventListener('mouseleave', (event) => this.onCellLeave(event));
-      cellEl.addEventListener('click', (event) => this.onCellClick(event));
+      cellEl.addEventListener('mouseenter', this.onCellEnter.bind(this));
+      cellEl.addEventListener('mouseleave', this.onCellLeave.bind(this));
+      cellEl.addEventListener('click', this.onCellClick.bind(this));
       this.boardEl.appendChild(cellEl);
     }
 
