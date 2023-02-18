@@ -8,6 +8,7 @@ import createTooltip from './createTooltip';
 import GameState from './GameState';
 import themes from './themes';
 import randomPosition from './randomPosition';
+import returnTheDesiredPrototype from './returnTheDesiredPrototype';
 
 export default class GameController {
   constructor(gamePlay, stateService) {
@@ -29,74 +30,70 @@ export default class GameController {
     if (this.gameState.state === 'active') {
       this.gamePlay.drawUi(themes[this.gameState.gameLevel]);
       if (!this.gameState.loadSave) {
-         if (this.gameState.gameLevel === 1) {
-        const playerTeam = new Team(generateTeam(['Magician', 'Swordsman', 'Bowman'], 1, 2));
-        const enemyTeam = new Team(generateTeam(['Vampire', 'Undead', 'Daemon'], 1, 2));
+        if (this.gameState.gameLevel === 1) {
+          const playerTeam = new Team(generateTeam(['Magician', 'Swordsman', 'Bowman'], 1, 2));
+          const enemyTeam = new Team(generateTeam(['Vampire', 'Undead', 'Daemon'], 1, 2));
 
-        this.lightTeam = playerTeam.toArray().map((character, index) => new PositionedCharacter(
-          character,
-          randomPosition(
-            [0, 1],
-            playerTeam.characters.size - 1 === index,
-            this.gamePlay.boardSize,
-          ),
-        ));
+          this.lightTeam = playerTeam.toArray().map((character, index) => new PositionedCharacter(
+            character,
+            randomPosition(
+              [0, 1],
+              playerTeam.characters.size - 1 === index,
+              this.gamePlay.boardSize,
+            ),
+          ));
 
-        this.darkTeam = enemyTeam.toArray().map((character, index) => new PositionedCharacter(
-          character,
-          randomPosition(
-            [6, 7],
-            enemyTeam.characters.size - 1 === index,
-            this.gamePlay.boardSize,
-          ),
-        ));
-        this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this));
-        this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this));
+          this.darkTeam = enemyTeam.toArray().map((character, index) => new PositionedCharacter(
+            character,
+            randomPosition(
+              [6, 7],
+              enemyTeam.characters.size - 1 === index,
+              this.gamePlay.boardSize,
+            ),
+          ));
+          this.gamePlay.addCellEnterListener(this.onCellEnter.bind(this));
+          this.gamePlay.addCellLeaveListener(this.onCellLeave.bind(this));
 
-        this.gamePlay.addCellClickListener(this.onCellClick.bind(this));
-        this.gamePlay.addNewGameListener(this.onNewGameClick.bind(this));
-        this.gamePlay.addSaveGameListener(this.onSaveGameClick.bind(this));
-        this.gamePlay.addLoadGameListener(this.onLoadGameClick.bind(this));
+          this.gamePlay.addCellClickListener(this.onCellClick.bind(this));
+          this.gamePlay.addNewGameListener(this.onNewGameClick.bind(this));
+          this.gamePlay.addSaveGameListener(this.onSaveGameClick.bind(this));
+          this.gamePlay.addLoadGameListener(this.onLoadGameClick.bind(this));
+        } else {
+          const playerTeam = new Team(generateTeam(['Magician', 'Swordsman', 'Bowman'], 1, 2));
+          for (let i = 0; i < this.gameState.gameLevel - 1; i += 1) {
+            playerTeam.toArray().forEach((character) => character.levelUp());
+          }
+          this.lightTeam.forEach((element) => {
+            playerTeam.add([element.character]);
+          });
+          this.lightTeam = playerTeam.toArray().map((character, index) => new PositionedCharacter(
+            character,
+            randomPosition(
+              [0, 1],
+              playerTeam.characters.size - 1 === index,
+              this.gamePlay.boardSize,
+            ),
+          ));
+          const enemyTeam = new Team(generateTeam(['Vampire', 'Undead', 'Daemon'], 1, this.lightTeam.length));
+          for (let i = 0; i < this.gameState.gameLevel - 1; i += 1) {
+            enemyTeam.toArray().forEach((character) => character.levelUp());
+          }
+          this.darkTeam = enemyTeam.toArray().map((character, index) => new PositionedCharacter(
+            character,
+            randomPosition(
+              [6, 7],
+              enemyTeam.characters.size - 1 === index,
+              this.gamePlay.boardSize,
+            ),
+          ));
+        }
+
+        this.arrAllTeams = this.lightTeam.concat(this.darkTeam);
+        this.gameState.allTeams = this.arrAllTeams;
       } else {
-        const playerTeam = new Team(generateTeam(['Magician', 'Swordsman', 'Bowman'], 1, 2));
-        for (let i = 0; i < this.gameState.gameLevel - 1; i += 1) {
-          playerTeam.toArray().forEach((character) => character.levelUp());
-        }
-        this.lightTeam.forEach((element) => {
-          playerTeam.add([element.character]);
-        });
-        this.lightTeam = playerTeam.toArray().map((character, index) => new PositionedCharacter(
-          character,
-          randomPosition(
-            [0, 1],
-            playerTeam.characters.size - 1 === index,
-            this.gamePlay.boardSize,
-          ),
-        ));
-        const enemyTeam = new Team(generateTeam(['Vampire', 'Undead', 'Daemon'], 1, this.lightTeam.length));
-        for (let i = 0; i < this.gameState.gameLevel - 1; i += 1) {
-          enemyTeam.toArray().forEach((character) => character.levelUp());
-        }
-        this.darkTeam = enemyTeam.toArray().map((character, index) => new PositionedCharacter(
-          character,
-          randomPosition(
-            [6, 7],
-            enemyTeam.characters.size - 1 === index,
-            this.gamePlay.boardSize,
-          ),
-        ));
+        this.arrAllTeams = this.gameState.allTeams;
       }
 
-      this.arrAllTeams = this.lightTeam.concat(this.darkTeam);
-      this.gameState.allTeams = this.arrAllTeams;
-      } else {
-        console.log(this.arrAllTeams,this.gameState.allTeams);
-        /*this.arrAllTeams = this.gameState.allTeams.map(element => {
-          return new PositionedCharacter(element.character, element.position)
-        } );*/
-        
-      }
-     
       this.gamePlay.redrawPositions(this.arrAllTeams);
       this.gameState.loadSave = false;
     }
@@ -112,7 +109,7 @@ export default class GameController {
           this.gamePlay.deselectCell(this.selectedCharacter);
         }
         if (/bowman|swordsman|magician/.test(player.className)) {
-          this.selectedCharacter = index; ob
+          this.selectedCharacter = index;
           this.gamePlay.selectCell(index);
           const character = this.arrAllTeams.find((ind) => ind.position === index).character || null;
 
@@ -265,19 +262,16 @@ export default class GameController {
       }
 
       this.gamePlay.hideCellTooltip(this.arrAllTeams[deadCharacter].position);
-      this.gamePlay.deselectCell(this.arrAllTeams[deadCharacter].position)
+      this.gamePlay.deselectCell(this.arrAllTeams[deadCharacter].position);
       this.arrAllTeams.splice(deadCharacter, 1);
       this.gameState.allTeams = this.arrAllTeams;
       this.gamePlay.redrawPositions(this.arrAllTeams);
     }
     this.splitByTeams();
     if (this.lightTeam.length <= 0) {
-      console.log('you dead');
       this.gameState.state = 'gameOver';
     }
     if (this.darkTeam <= 0) {
-      console.log('you win');
-      console.log(this.arrAllTeams)
       this.arrAllTeams.forEach((element) => {
         element.character.levelUp();
       });
@@ -287,8 +281,6 @@ export default class GameController {
       }
       this.init();
     }
-     
-    
   }
 
   splitByTeams() {
@@ -315,20 +307,17 @@ export default class GameController {
   }
 
   onSaveGameClick() {
-    if(localStorage.getItem('state')) {
-      console.log(localStorage.getItem('state'));
-      localStorage.clear();
-    }
     this.stateService.save(this.gameState);
-    console.log('save')
   }
 
   onLoadGameClick() {
-    console.log(this.stateService.load());
-    const gameStateLoad = this.stateService.load();
-    this.gameState = gameStateLoad;
+    this.gameState = this.stateService.load();
+    this.gameState.allTeams.forEach((element) => {
+      const proto = returnTheDesiredPrototype(element.character.type);
+      element.character.__proto__ = proto;
+    });
     this.gameState.loadSave = true;
+
     this.init();
-    console.log(this.gameState);
   }
 }
