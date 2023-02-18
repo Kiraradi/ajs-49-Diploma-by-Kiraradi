@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1676612565785" clover="3.2.0">
+  <project timestamp="1676612565785" name="All files">
+    <metrics statements="104" coveredstatements="95" conditionals="59" coveredconditionals="53" methods="16" coveredmethods="14" elements="179" coveredelements="162" complexity="0" loc="104" ncloc="104" packages="2" files="10" classes="10"/>
+    <package name="js">
+      <metrics statements="74" coveredstatements="65" conditionals="59" coveredconditionals="53" methods="10" coveredmethods="8"/>
+      <file name="Character.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\Character.js">
+        <metrics statements="10" coveredstatements="6" conditionals="5" coveredconditionals="3" methods="2" coveredmethods="1"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="18" count="9" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+        <line num="20" count="9" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="22" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+      <file name="availableMoves.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\availableMoves.js">
+        <metrics statements="41" coveredstatements="41" conditionals="28" coveredconditionals="28" methods="5" coveredmethods="5"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="38" type="stmt"/>
+        <line num="11" count="38" type="stmt"/>
+        <line num="12" count="292" type="stmt"/>
+        <line num="14" count="292" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="22" count="37" type="cond" truecount="4" falsecount="0"/>
+        <line num="23" count="25" type="stmt"/>
+        <line num="26" count="37" type="cond" truecount="4" falsecount="0"/>
+        <line num="27" count="25" type="stmt"/>
+        <line num="30" count="37" type="cond" truecount="6" falsecount="0"/>
+        <line num="32" count="19" type="stmt"/>
+        <line num="35" count="37" type="cond" truecount="6" falsecount="0"/>
+        <line num="37" count="19" type="stmt"/>
+        <line num="40" count="5" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+        <line num="43" count="5" type="stmt"/>
+        <line num="44" count="29" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="47" count="29" type="stmt"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="52" count="10" type="stmt"/>
+        <line num="53" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="54" count="6" type="stmt"/>
+        <line num="55" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="58" count="12" type="stmt"/>
+        <line num="61" count="10" type="stmt"/>
+        <line num="64" count="5" type="stmt"/>
+        <line num="65" count="5" type="stmt"/>
+        <line num="67" count="5" type="stmt"/>
+        <line num="68" count="21" type="stmt"/>
+        <line num="69" count="91" type="stmt"/>
+        <line num="73" count="88" type="stmt"/>
+        <line num="74" count="91" type="stmt"/>
+        <line num="76" count="5" type="stmt"/>
+      </file>
+      <file name="createTooltip.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\createTooltip.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="2" type="stmt"/>
+      </file>
+      <file name="utils.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\utils.js">
+        <metrics statements="22" coveredstatements="17" conditionals="26" coveredconditionals="22" methods="2" coveredmethods="1"/>
+        <line num="26" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="6" type="cond" truecount="4" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="js.characters">
+      <metrics statements="30" coveredstatements="30" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+      <file name="Bowman.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\characters\Bowman.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+      </file>
+      <file name="Daemon.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\characters\Daemon.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+      <file name="Magician.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\characters\Magician.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+      </file>
+      <file name="Swordsman.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\characters\Swordsman.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+      <file name="Undead.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\characters\Undead.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+      <file name="Vampire.js" path="F:\Training\ajs-homeworks\ajs-49-Diploma-by-Kiraradi\src\js\characters\Vampire.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
